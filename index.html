@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRADE PULSE PRO</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+background:#08111f;
+color:white;
+font-family:Arial,sans-serif;
+padding:15px;
+}
+header{
+background:#14243b;
+padding:18px;
+border-radius:14px;
+margin-bottom:15px;
+}
+h1{color:#39a5ff;font-size:23px}
+.card{
+background:#14243b;
+padding:17px;
+border-radius:13px;
+margin-bottom:13px;
+border:1px solid #263b58;
+}
+.label{color:#9aabc3;font-size:13px}
+.value{font-size:23px;font-weight:bold;margin-top:8px}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+.green{color:#00db91}
+.red{color:#ff536b}
+button{
+width:100%;
+padding:14px;
+border:0;
+border-radius:9px;
+font-size:16px;
+font-weight:bold;
+margin-top:10px;
+}
+.buy{background:#00c98b;color:#001c13}
+.sell{background:#ff536b;color:white}
+input,select{
+width:100%;
+padding:13px;
+background:#091525;
+color:white;
+border:1px solid #344c6d;
+border-radius:8px;
+margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>⚡ TRADE PULSE PRO</h1>
+<p>Professional Trading Dashboard</p>
+<span style="color:#00db91">● PAPER TRADING MODE</span>
+</header>
+
+<div class="grid">
+
+<div class="card">
+<div class="label">PAPER CAPITAL</div>
+<div class="value">₹20,000</div>
+</div>
+
+<div class="card">
+<div class="label">TIMEFRAME</div>
+<div class="value">5 MIN</div>
+</div>
+
+<div class="card">
+<div class="label">NIFTY 50</div>
+<div class="value" id="nifty">WAITING</div>
+</div>
+
+<div class="card">
+<div class="label">BANK NIFTY</div>
+<div class="value" id="bank">WAITING</div>
+</div>
+
+</div>
+
+<div class="card">
+<h3>📊 TRADING SIGNAL</h3>
+<div class="value" id="signal">WAITING FOR DATA</div>
+<p id="message">Live market connection pending</p>
+</div>
+
+<div class="card">
+<h3>TRADE CONTROLS</h3>
+
+<label>Entry Price</label>
+<input id="entry" type="number" placeholder="Enter Price">
+
+<label>Stop Loss</label>
+<input id="sl" type="number" placeholder="Enter Stop Loss">
+
+<label>Target</label>
+<input id="tp" type="number" placeholder="Enter Target">
+
+<button class="buy" onclick="trade('BUY')">
+PAPER BUY
+</button>
+
+<button class="sell" onclick="trade('SELL')">
+PAPER SELL
+</button>
+
+<p id="status">No Active Trade</p>
+</div>
+
+<div class="card">
+<h3>💰 PERFORMANCE</h3>
+<p>Available Balance: <b id="balance">₹20,000</b></p>
+<p>Net Profit/Loss: <b id="pnl">₹0</b></p>
+<p>Total Trades: <b id="total">0</b></p>
+</div>
+
+<div class="card">
+<h3>TRADE PULSE PRO</h3>
+<p>EMA 9 / 21 / 50</p>
+<p>RSI 14 | ADX 14</p>
+<p>VWAP | Volume Confirmation</p>
+<p>Automatic Signal Engine: Pending</p>
+<p>Kotak Neo Connection: Pending</p>
+</div>
+
+<script>
+let capital=20000;
+let pnl=0;
+let total=0;
+let active=false;
+
+function trade(side){
+
+if(active){
+alert("Close previous trade first");
+return;
+}
+
+let entry=Number(document.getElementById("entry").value);
+let sl=Number(document.getElementById("sl").value);
+let tp=Number(document.getElementById("tp").value);
+
+if(!entry || !sl || !tp){
+alert("Enter Entry, SL and Target");
+return;
+}
+
+if(side==="BUY" && (sl>=entry || tp<=entry)){
+alert("Invalid BUY SL/Target");
+return;
+}
+
+if(side==="SELL" && (sl<=entry || tp>=entry)){
+alert("Invalid SELL SL/Target");
+return;
+}
+
+active=true;
+total++;
+
+document.getElementById("status").innerText=
+side+" PAPER TRADE OPEN | Entry: "+entry+
+" | SL: "+sl+" | Target: "+tp;
+
+document.getElementById("total").innerText=total;
+}
+</script>
+
+</body>
+</html>
